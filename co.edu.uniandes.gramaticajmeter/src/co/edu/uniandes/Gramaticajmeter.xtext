@@ -1,0 +1,45 @@
+grammar co.edu.uniandes.Gramaticajmeter with org.eclipse.xtext.common.Terminals
+
+generate gramaticajmeter "http://www.edu.co/uniandes/Gramaticajmeter"
+
+JMeter :
+	architectureResults += ArchitectureResults(NL architectureResults += ArchitectureResults)* NL?
+;
+ArchitectureResults :
+	'architecture='architecture=STRING NL
+	header = Header	NL
+ 	results += Results(NL results += Results)* NL
+ 	headerJMeter = HeaderJMeter	NL
+ 	resultsJMeter += Results(NL resultsJMeter += Results)*
+;
+
+Header:
+header += ColumnHeader(COMMA header += ColumnHeader)*
+;
+
+Results:
+result += Result (COMMA result += Result)*
+;
+
+ColumnHeader:
+'stimulus'|'minresponsetime'|'maxresponsetime'|'averagetime'|'errorcount'|'totalreq'|'threads'|'averagelatency'|'minlatency'|'maxlatency'|'percentageerror'|'throughput'
+;
+ 
+Result:
+ value=STRING 
+;
+
+HeaderJMeter:
+header += ColumnHeaderJMeter(COMMA header += ColumnHeaderJMeter)*
+;
+
+ColumnHeaderJMeter:
+'timeStamp'|'elapsed'|'label'|'responseCode'|'responseMessage'|'threadName'|'dataType'|'success'|'bytes'|'grpThreads'|'allThreads'|'Latency'
+;
+
+terminal COMMA:
+	',';
+	
+terminal NL:
+	('\r')?'\n'
+;
